@@ -47,7 +47,7 @@ pub struct HelloPlugin;
 
 impl Plugin for HelloPlugin {
     fn build(&self, app: &mut App) {
-        // Systems are usually running parallel per scheduling level but sets of systems can be chained to a single task
+        // Systems are usually are running parallel per scheduling level but sets of systems can be chained to a single task
         app.insert_resource(GreetTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
             .add_systems(Startup, add_people)
             .add_systems(Update, (hello_world, (update_people, greet_people).chain()));
