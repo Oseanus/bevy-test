@@ -26,6 +26,7 @@ fn greet_people(query: Query<&Name, With<Person>>) {
     }
 }
 
+
 // A mutable system for changing attibutes of certain components
 fn update_people(mut query: Query<&mut Name, With<Person>>) {
     for mut name in &mut query {
@@ -36,11 +37,19 @@ fn update_people(mut query: Query<&mut Name, With<Person>>) {
     }
 }
 
+pub struct HelloPlugin;
+
+impl Plugin for HelloPlugin {
+    fn build(&self, app: &mut App) {
+        // Systems are usually running parallel per scheduling level but sets of systems can be chained to a single task
+        app.add_systems(Startup, add_people)
+            .add_systems(Update, (hello_world, (update_people, greet_people).chain()));
+
+    }
+}
+
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
-        // Systems are usually running parallel per scheduling level but sets of systems can be chained to a single task
-        .add_systems(Startup, add_people)
-        .add_systems(Update, (hello_world, (update_people, greet_people).chain()))
+        .add_plugins((DefaultPlugins, HelloPlugin))
         .run();
 }
