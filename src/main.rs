@@ -38,6 +38,7 @@ fn update_people(mut query: Query<&mut Name, With<Person>>) {
 
 fn main() {
     App::new()
+        .add_plugins(DefaultPlugins)
         // Systems are usually running parallel per scheduling level but sets of systems can be chained to a single task
         .add_systems(Startup, add_people)
         .add_systems(Update, (hello_world, (update_people, greet_people).chain()))
