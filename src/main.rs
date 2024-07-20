@@ -26,9 +26,20 @@ fn greet_people(query: Query<&Name, With<Person>>) {
     }
 }
 
+// A mutable system for changing attibutes of certain components
+fn update_people(mut query: Query<&mut Name, With<Person>>) {
+    for mut name in &mut query {
+        if name.0 == "Arne Eckel" {
+            name.0 = "Arne Eckel-Dehning".to_string();
+            break; // We don’t need to change any other names
+        }
+    }
+}
+
 fn main() {
     App::new()
+        // Systems are usually running parallel per scheduling level but sets of systems can be chained to a single task
         .add_systems(Startup, add_people)
-        .add_systems(Update, (hello_world, greet_people))
+        .add_systems(Update, (hello_world, (update_people, greet_people).chain()))
         .run();
 }
