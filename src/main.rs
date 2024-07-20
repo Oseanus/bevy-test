@@ -19,6 +19,7 @@ fn add_people(mut commands: Commands) {
     commands.spawn((Person, Name("Arne Eckel".to_string())));
 }
 
+// Define a resource
 #[derive(Resource)]
 struct GreetTimer(Timer);
 
@@ -54,7 +55,5 @@ impl Plugin for HelloPlugin {
 }
 
 fn main() {
-    App::new()
-        .add_plugins((DefaultPlugins, HelloPlugin))
-        .run();
+    App::new().add_plugins((DefaultPlugins, HelloPlugin)).run();
 }
