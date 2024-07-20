@@ -41,6 +41,7 @@ fn update_people(mut query: Query<&mut Name, With<Person>>) {
     }
 }
 
+// A custom plugin for bevy
 pub struct HelloPlugin;
 
 impl Plugin for HelloPlugin {
