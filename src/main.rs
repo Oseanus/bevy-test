@@ -31,7 +31,7 @@ fn greet_people(time: Res<Time>, mut timer: ResMut<GreetTimer>, query: Query<&Na
     }
 }
 
-// A mutable system for changing attibutes of certain components
+// A mutable system for changing attributes of certain components
 fn update_people(mut query: Query<&mut Name, With<Person>>) {
     for mut name in &mut query {
         if name.0 == "Arne Eckel" {
@@ -50,7 +50,6 @@ impl Plugin for HelloPlugin {
         app.insert_resource(GreetTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
             .add_systems(Startup, add_people)
             .add_systems(Update, (hello_world, (update_people, greet_people).chain()));
-
     }
 }
 
